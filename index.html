@@ -6,6 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My gl big project!!!</title>
     <script src="js/index.js" type="module"></script>
+    <script id="vertex-shader" type="shader/vertex-shader">
+        #version 300 es
+        in vec3 a_position;
+        void main() {
+            gl_PointSize = 10.0;
+            gl_Position = vec4(a_position, 1.0);
+        }
+    </script>
+    <script id="fragment-shader" type="shader/fragment-shader">
+        #version 300 es
+        precision mediump float;
+        out vec4 myColor;
+        void main() {
+            myColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+    </script>
 </head>
 <body>
     <canvas id="cvs-id"></canvas>
