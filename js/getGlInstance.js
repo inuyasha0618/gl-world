@@ -10,6 +10,12 @@ export default function(canvasId) {
     gl.clearColor(0.0, 1.0, 1.0, 1.0);
 
     const glClear = gl.clear.bind(gl);
+    const glClearColor = gl.clearColor.bind(gl);
+
+    gl.clearColor = function(r, g, b, a) {
+        glClearColor(r, g, b, a);
+        return this;
+    }
 
     gl.clear = function() {
         glClear(this.COLOR_BUFFER_BIT | this.DEPTH_BUFFER_BIT);
