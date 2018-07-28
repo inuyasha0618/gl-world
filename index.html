@@ -9,9 +9,11 @@
     <script id="vertex-shader" type="shader/vertex-shader">
         #version 300 es
         in vec3 a_position;
+        uniform float u_angle;
+        uniform float u_pointsize;
         void main() {
-            gl_PointSize = 10.0;
-            gl_Position = vec4(a_position, 1.0);
+            gl_PointSize = u_pointsize;
+            gl_Position = vec4(a_position.x + 0.8 * cos(u_angle), a_position.y + 0.8 * sin(u_angle), a_position.z, 1.0);
         }
     </script>
     <script id="fragment-shader" type="shader/fragment-shader">
@@ -25,5 +27,6 @@
 </head>
 <body>
     <canvas id="cvs-id"></canvas>
+    <button id="btn">stop</button>
 </body>
 </html>
