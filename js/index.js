@@ -4,8 +4,8 @@ import RenderLoop from './RenderLoop.js';
 
 let gl = getGlInstance('cvs-id').setSize(600, 600).clearColor(0.0, 0.0, 0.0, 1.0).clear();
 let program = getProgramObj(gl, 'vertex-shader', 'fragment-shader');
-
-console.log(`program: ${program}`);
+const btn = document.getElementById('btn');
+const fps = document.getElementById('fps');
 
 gl.useProgram(program);
 const positionIndex = gl.getAttribLocation(program, 'a_position');
@@ -31,11 +31,11 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
     gl.uniform1f(uPointSizeIndex, size);
     gl.clear();
     gl.drawArrays(gl.POINTS, 0, 1);
+    fps.innerHTML = RLoop.currentFps;
 })(90);
 
-const RLoop = new RenderLoop(drawPoint).start();
+const RLoop = new RenderLoop(drawPoint, 15).start();
 
-const btn = document.getElementById('btn');
 btn.addEventListener('click', function() {
     if (RLoop.isActive) {
         RLoop.stop();

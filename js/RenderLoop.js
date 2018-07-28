@@ -1,14 +1,33 @@
 export default class RenderLoop {
-    constructor(cb, fps) {
+    constructor(cb, fps=0) {
         this.currentFps = 0;
         this.isActive = false;
         this.msLastFrame = performance.now();
 
-        this.run = () => {
-            let currentTime = performance.now();
-            cb((currentTime - this.msLastFrame)/1000);
-            this.msLastFrame = currentTime;
-            if (this.isActive) window.requestAnimationFrame(this.run);
+        if (fps && typeof fps === 'number' && !Number.isNaN(fps)) {
+            this.msFpsLimit = 1000/fps;
+            this.run = () => {
+                let currentTime = performance.now();
+                let msDt = currentTime - this.msLastFrame;
+                let dt = msDt/1000;
+
+                if (msDt >= this.msFpsLimit) {
+                    cb(dt);
+                    this.currentFps =  Math.floor(1.0 / dt);
+                    this.msLastFrame = currentTime;    
+                }
+
+                if (this.isActive) window.requestAnimationFrame(this.run);
+            }
+        } else {
+            this.run = () => {
+                let currentTime = performance.now();
+                let dt = (currentTime - this.msLastFrame)/1000;
+                cb(dt);
+                this.currentFps =  Math.floor(1.0 / dt);                
+                this.msLastFrame = currentTime;
+                if (this.isActive) window.requestAnimationFrame(this.run);
+            }
         }
     }
 
