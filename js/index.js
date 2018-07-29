@@ -34,13 +34,18 @@ let mesh = new Mesh({
     aryVert: [0.0, 0.0, 0.0,   0.1, 0.1, 0.0,   0.1, -0.1, 0.0,   -0.1, 0.1, 0.0,   -0.1, -0.1, 0.0,]
 });
 
+let mesh2 = new Mesh({
+    gl,
+    aryVert: [0.0, 0.0, 0.0,   0.1, 0.1, 0.0,   0.1, -0.1, 0.0,   -0.1, 0.1, 0.0,   -0.1, -0.1, 0.0,].map(val => val + 0.2)
+});
+
 const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt => {
     let incAngle = rotSpeed * Math.PI / 180.0 * dt;
     angle += incAngle;
     pointSize += shrinkSpeed * dt;
     let size = 20 + 10 * Math.sin(pointSize);
     gl.clear();
-    program.activate().set(angle, size).renderMesh(mesh);
+    program.activate().set(angle, size).renderMesh(mesh).renderMesh(mesh2);
 
     fps.innerHTML = RLoop.currentFps;
 })(90);
