@@ -1,4 +1,4 @@
-const getShaderSrc = scriptId => {
+export const getShaderSrc = scriptId => {
     let scriptNode = document.getElementById(scriptId);
     if (!scriptNode) {
         console.error(`${scriptId} not found`);

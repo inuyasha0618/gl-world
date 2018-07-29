@@ -1,6 +1,7 @@
 import getGlInstance from './getGlInstance.js';
-import { getProgramObj } from './shaderUtils.js';
+import { getProgramObj, getShaderSrc } from './shaderUtils.js';
 import RenderLoop from './RenderLoop.js';
+import Program from './Program.js';
 
 let gl = getGlInstance('cvs-id').setSize(600, 600).clearColor(0.0, 0.0, 0.0, 1.0).clear();
 let program = getProgramObj(gl, 'vertex-shader', 'fragment-shader');
@@ -46,3 +47,11 @@ btn.addEventListener('click', function() {
     btn.innerHTML = 'stop';
     RLoop.start();
 })
+
+class CustomProgram extends Program {
+    constructor(gl) {
+        let vShaderSrc = getShaderSrc('vertex-shader');
+        let fShaderSrc = getShaderSrc('fragment-shader');
+        super(gl, vShaderSrc, fShaderSrc);
+    }
+}
