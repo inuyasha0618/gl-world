@@ -53,5 +53,12 @@ class CustomProgram extends Program {
         let vShaderSrc = getShaderSrc('vertex-shader');
         let fShaderSrc = getShaderSrc('fragment-shader');
         super(gl, vShaderSrc, fShaderSrc);
+        this.uniformLocation.uAngle = gl.getUniformLocation(program, 'u_angle');
+        this.uniformLocation.uPointSize = gl.getUniformLocation(program, 'u_pointsize');
+    }
+
+    set(angle, pointSize) {
+        gl.uniform1f(this.uniformLocation.uAngle, angle);
+        gl.uniform1f(his.uniformLocation.uPointSize, pointSize);
     }
 }
