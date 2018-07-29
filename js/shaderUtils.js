@@ -48,6 +48,13 @@ const createProgram = (gl, vShader, fShader) => {
     return program;
 }
 
+export const createProgramFromShaderSource = (gl, vShaderSource, fShaderSource) => {
+    let vShader = getShaderObj(gl, vShaderSource, gl.VERTEX_SHADER);    if (!vShader) return null;
+    let fShader = getShaderObj(gl, fShaderSource, gl.FRAGMENT_SHADER);  if (!fShader) return null;
+
+    return createProgram(gl, vShader, fShader);   
+}
+
 export const getProgramObj = (gl, vsId, fsId) => {
     let vShaderSource = getShaderSrc(vsId);                             if (!vShaderSource) return null;
     let fShaderSource = getShaderSrc(fsId);                             if (!fShaderSource) return null;
