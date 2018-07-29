@@ -34,7 +34,7 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
     fps.innerHTML = RLoop.currentFps;
 })(90);
 
-const RLoop = new RenderLoop(drawPoint, 15).start();
+const RLoop = new RenderLoop(drawPoint).start();
 
 btn.addEventListener('click', function() {
     if (RLoop.isActive) {
