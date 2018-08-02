@@ -43,6 +43,13 @@ const createProgram = (gl, vShader, fShader) => {
     let program = gl.createProgram();
     gl.attachShader(program, vShader);
     gl.attachShader(program, fShader);
+
+    // bindAttribLocation必须在link之前！！！
+    gl.bindAttribLocation(program, ATTR_POSITION_LOC,ATTR_POSITION_NAME);
+    gl.bindAttribLocation(program, ATTR_NORMAL_LOC,ATTR_NORMAL_NAME);
+    gl.bindAttribLocation(program, ATTR_UV_LOC,ATTR_UV_NAME);
+    gl.bindAttribLocation(program, ATTR_COLOR_LOC,ATTR_COLOR_NAME);
+
     gl.linkProgram(program);
 
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {

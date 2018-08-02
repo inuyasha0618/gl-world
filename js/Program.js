@@ -18,13 +18,6 @@ export default class Program {
         this.program = createProgramFromShaderSource(gl, vertexShaderSrc, fragShaderSrc);
         gl.useProgram(this.program);
         this.uniformLocation = {};
-        gl.bindAttribLocation(this.program, ATTR_POSITION_LOC,ATTR_POSITION_NAME);
-		gl.bindAttribLocation(this.program, ATTR_NORMAL_LOC,ATTR_NORMAL_NAME);
-        gl.bindAttribLocation(this.program, ATTR_UV_LOC,ATTR_UV_NAME);
-        gl.bindAttribLocation(this.program, ATTR_COLOR_LOC,ATTR_COLOR_NAME);
-
-        console.log(`${ATTR_COLOR_LOC} ${ATTR_COLOR_NAME}`);
-        
         this.uniformLoc = getStandardUniformLocations(gl, this.program);
     }
 
