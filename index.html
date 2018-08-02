@@ -8,20 +8,22 @@
     <script src="js/index.js" type="module"></script>
     <script id="vertex-shader" type="shader/vertex-shader">
         #version 300 es
+        uniform mat4 uMVMatrix;
         in vec3 a_position;
-        uniform float u_angle;
-        uniform float u_pointsize;
+        layout (location=1) in vec3 a_color;
+        out vec3 vColor;
         void main() {
-            gl_PointSize = u_pointsize;
-            gl_Position = vec4(a_position.x + 0.8 * cos(u_angle), a_position.y + 0.8 * sin(u_angle), a_position.z, 1.0);
+            gl_Position = uMVMatrix * vec4(a_position, 1.0);
+            vColor = a_color;
         }
     </script>
     <script id="fragment-shader" type="shader/fragment-shader">
         #version 300 es
-        precision mediump float;
+        precision highp float;
+        in vec3 vColor;
         out vec4 myColor;
         void main() {
-            myColor = vec4(1.0, 1.0, 1.0, 1.0);
+            myColor = vec4(vColor, 1.0);
         }
     </script>
 </head>

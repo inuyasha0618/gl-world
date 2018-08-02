@@ -1,6 +1,7 @@
 export default function(canvasId) {
     let canvas = document.getElementById(canvasId);
     let gl = canvas.getContext('webgl2');
+    gl.enable(gl.DEPTH_TEST);
 
     if (!gl) {
         console.error('Webgl context is not available.');

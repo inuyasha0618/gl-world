@@ -2,11 +2,14 @@ import {
     ATTR_POSITION_LOC,
     ATTR_NORMAL_LOC,
     ATTR_UV_LOC,
+    ATTR_COLOR_LOC,
 } from './attrConfig.js'
 
+import { getStandardAttribLocations } from './shaderUtils.js';
+
 export default class Mesh {
-    constructor({gl, aryInd=[], aryVert=[], aryNorm=[], aryUV=[]}) {
-        this.drawMode = gl.POINTS;
+    constructor({gl, aryInd=[], aryVert=[], aryColor=[], aryNorm=[], aryUV=[]}) {
+        this.drawMode = gl.TRIANGLES;
         this.vao = gl.createVertexArray();
         gl.bindVertexArray(this.vao);
 
@@ -17,6 +20,14 @@ export default class Mesh {
             gl.vertexAttribPointer(ATTR_POSITION_LOC, 3, gl.FLOAT, false, 0, 0);
             gl.enableVertexAttribArray(ATTR_POSITION_LOC);
             this.vertexCount = aryVert.length / 3;
+        }
+
+        if (aryColor.length > 0) {
+            let colorBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(aryColor), gl.STATIC_DRAW);
+            gl.vertexAttribPointer(ATTR_COLOR_LOC, 3, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(ATTR_COLOR_LOC);
         }
 
         if (aryNorm.length > 0) {

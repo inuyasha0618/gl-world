@@ -1,3 +1,14 @@
+import { 
+    ATTR_POSITION_NAME,
+    ATTR_POSITION_LOC,
+    ATTR_NORMAL_NAME,
+    ATTR_NORMAL_LOC,
+    ATTR_UV_NAME,
+    ATTR_UV_LOC,
+    ATTR_COLOR_LOC,
+    ATTR_COLOR_NAME,
+} from './attrConfig.js'
+
 export const getShaderSrc = scriptId => {
     let scriptNode = document.getElementById(scriptId);
     if (!scriptNode) {
@@ -63,4 +74,22 @@ export const getProgramObj = (gl, vsId, fsId) => {
     let fShader = getShaderObj(gl, fShaderSource, gl.FRAGMENT_SHADER);  if (!fShader) return null;
 
     return createProgram(gl, vShader, fShader);
+}
+
+export const getStandardUniformLocations = (gl, program) => {
+    return {
+        perspective:	gl.getUniformLocation(program,"uPMatrix"),
+        modalMatrix:	gl.getUniformLocation(program,"uMVMatrix"),
+        cameraMatrix:	gl.getUniformLocation(program,"uCameraMatrix"),
+        mainTexture:	gl.getUniformLocation(program,"uMainTex")
+    };
+}
+
+export const getStandardAttribLocations = (gl,program) => {
+    return {
+        position:	gl.getAttribLocation(program,ATTR_POSITION_NAME),
+        norm:		gl.getAttribLocation(program,ATTR_NORMAL_NAME),
+        uv:			gl.getAttribLocation(program,ATTR_UV_NAME),
+        color: gl.getAttribLocation(program,ATTR_COLOR_NAME),
+    };
 }
