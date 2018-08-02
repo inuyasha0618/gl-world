@@ -68,7 +68,27 @@ let modal = new Modal(mesh).setPosition(0.5, 0.5, -0.5).setRotation(30, 30, 30);
 
 const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt => {
     gl.clear();
-    program.activate().renderModal(modal);
+    // program.activate().renderModal(modal);
+
+    let p = modal.transform.position,				//Just an pointer to transform position, make code smaller 
+            angle = Math.atan2(p.y,p.x)  + (1*dt),		//Calc the current angle plus 1 degree per second rotation
+            radius = Math.sqrt(p.x * p.x + p.y * p.y),	//Calc the distance from origin.
+            scale = Math.max(0.2,  Math.abs(Math.sin(angle)) * 1.2  );   //Just messing with numbers and seeing what happens :)
+
+        //-- Code Style One : Traditional -- 
+        //gModal.setScale(scale,scale,1)
+        //gModal.setPosition( radius * Math.cos(angle), radius * Math.sin(angle), 0 );
+        //gModal.transform.rotation.z += 15 * dt;
+        //gModal.transform.rotation.x += 30 * dt;
+        //gModal.transform.rotation.y += 60 * dt;
+        //gShader.activate().renderModal(gModal.preRender());
+
+        //-- Code Style Two : Chaining --
+        program.activate().renderModal(
+            modal	.setScale( scale, scale, scale)
+                    .setPosition( radius * Math.cos(angle), radius * Math.sin(angle), 0 )
+                    .addRotation( 30 * dt, 60 * dt, 15 * dt )
+        );
 
     fps.innerHTML = RLoop.currentFps;
 })(90);
