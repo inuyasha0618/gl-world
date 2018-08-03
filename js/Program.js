@@ -36,8 +36,10 @@ export default class Program {
     }
 
     renderModal(modal) {
-        const { mesh, transform } = modal;
+        modal.preRender();
+        const { mesh, transform, camera } = modal;
         this.setModalMatrix(transform.getTransMat());
+        // TODO: set mvp
         this.gl.bindVertexArray(mesh.vao);
         if (mesh.indexCount) {
             this.gl.drawElements(mesh.drawMode, mesh.indexCount, this.gl.UNSIGNED_SHORT, 0);

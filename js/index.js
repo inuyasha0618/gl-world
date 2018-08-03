@@ -84,6 +84,8 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
         //gShader.activate().renderModal(gModal.preRender());
 
         //-- Code Style Two : Chaining --
+        // Camera放在这里在render期间保证只更新一次, 不然在每个modal里分别更新会导致camera不一致的情况
+
         program.activate().renderModal(
             modal	.setScale( scale, scale, scale)
                     .setPosition( radius * Math.cos(angle), radius * Math.sin(angle), 0 )
