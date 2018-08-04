@@ -1,5 +1,5 @@
 import { Vector3, Matrix4 } from './Math.js';
-
+// Transform 作为一个基类吧， 相机的transform继承于它
 export default class Transform {
     constructor() {
         this.position = new Vector3(0, 0, 0);
@@ -20,6 +20,7 @@ export default class Transform {
 
     setPosition(x, y, z) {
         this.position.set(x, y, z);
+        return this;
     }
 
     setScale(x, y, z) {

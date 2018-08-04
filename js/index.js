@@ -4,6 +4,7 @@ import CubeProgram from './program/CubeProgram.js';
 import Mesh from './Mesh.js';
 import Modal from './Modal.js';
 import FixedCamera from './camera/FixedCamera.js';
+import FreeCamera from './camera/FreeCamera.js';
 import { vertices as cubeVertices, colors as cubeColors, indices as cubeIndices } from './vertexData/cubeData.js';
 import { vertices as gridVertices, colors as gridColors } from './vertexData/gridData.js';
 
@@ -42,6 +43,17 @@ const camera = new FixedCamera({
     near: 1.0,
     far: 100.0,
 });
+
+const freeCamera = new FreeCamera({
+    posX: 0,
+    posY: 10,
+    posZ: 50.0,
+    fovy: 60,
+    aspect: 1.0,
+    near: 1.0,
+    far: 100.0,
+    gl,
+})
 const cubeModal = new Modal(cubeMesh)
 .setPosition(5.0, 12.0, -10.0)
 // .setRotation(30, 30, 30);
@@ -63,7 +75,8 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
         program.activate()
         // .setPerspectiveMat(camera.getPerspectiveMat())
         // .setCameraMat(camera.getCameraMat())
-        .setVPMatrix(camera.getVpMat())
+        // .setVPMatrix(camera.getVpMat())
+        .setVPMatrix(freeCamera.getVpMat())
         .renderModal(
             cubeModal	
             .setScale( scale, scale, scale)
