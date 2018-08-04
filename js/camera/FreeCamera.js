@@ -51,8 +51,7 @@ export default class FreeCamera {
         const dy = currentY - this.prevY;
         this.prevX = currentX;
         this.prevY = currentY;
-        console.log(`dx: ${dx} dy: ${dy}`);
-        this.pos.addRotation(-0.05*dy, -0.05*dx, 0);
+        this.pos.addRotation(-0.1*dy, -0.1*dx, 0);
     }
 
     handleMouseUp(e) {
