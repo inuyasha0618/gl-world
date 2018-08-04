@@ -1,9 +1,8 @@
 import Transform from './Transform.js';
 export default class Modal {
-    constructor(meshData, camera) {
+    constructor(meshData) {
         this.mesh = meshData;
         this.transform = new Transform();
-        this.camera = camera
     }
 
     setScale(x, y, z) {
@@ -44,8 +43,6 @@ export default class Modal {
 
     preRender() {
         this.transform.updateMatrix();
-        // TODO: 看看在不同modal里camera是否会有不一致的情况，可能Camera实例作为全局的会更好
-        this.camera.updateMatrix();
         return this;
     }
 }

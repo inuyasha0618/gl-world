@@ -132,6 +132,8 @@ class Matrix4{
 
 	//from glMatrix
 	static perspective(out, fovy, aspect, near, far){
+		// 角度转成弧度！！！
+		fovy = Math.PI * fovy / 180;
 		var f = 1.0 / Math.tan(fovy / 2),
 			nf = 1 / (near - far);
 	    out[0] = f / aspect;

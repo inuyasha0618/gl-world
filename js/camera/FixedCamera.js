@@ -1,25 +1,27 @@
 // 固定位置相机
-import { Matrix4 } from './Math.js';
-import Transform from './Transform.js';
+import { Matrix4 } from '../Math.js';
+import Transform from '../Transform.js';
 export default class FixedCamera {
     constructor(
         {
             eyeX = 0,
-            eyeY = 0,
-            eyeZ = 0,
+            eyeY = 50,
+            eyeZ = -15,
             centerX = 0,
             centerY = 0,
-            centerZ = -1,
+            centerZ = -60,
             upX = 0,
             upY = 1,
             upZ = 0,
-            fovy = 30,
+            fovy = 60,
             aspect = 1.0,
-            near = 0.2,
-            far = 2.0,
+            near = 1.0,
+            far = 100.0,
         } = {}) {
         // 相当于相机的内参
         this.perspectiveMat = new Matrix4().setPerspective(fovy, aspect, near, far);
+        console.log(fovy, aspect, near, far);
+        console.log(this.perspectiveMat);
         // 相机的姿态矩阵， Tcw
         // 由于相机的位姿是会随着操作变化的，故这里需要Transform来管理底层的矩阵操作
         // this.pos = new Transform();
@@ -36,5 +38,13 @@ export default class FixedCamera {
     getVpMat() {
         this.updateMatrix();
         return this.vpMat;
+    }
+
+    getCameraMat() {
+        return this.posMat;
+    }
+
+    getPerspectiveMat() {
+        return this.perspectiveMat;
     }
 }

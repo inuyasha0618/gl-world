@@ -1,37 +1,24 @@
 // 通用的业务无关的program逻辑，如需具体定制program需要继承它
+// program的作用是
+// 1. 通过传入的shader code string 及 gl 对象，创建一个跟特定shader code相关联的program对象
+// 2. 并且能够给uniform变量赋值
+// 3. 渲染modal
 
-import { createProgramFromShaderSource, getStandardUniformLocations } from './shaderUtils.js';
-import { 
-    ATTR_POSITION_NAME,
-    ATTR_POSITION_LOC,
-    ATTR_NORMAL_NAME,
-    ATTR_NORMAL_LOC,
-    ATTR_UV_NAME,
-    ATTR_UV_LOC,
-    ATTR_COLOR_LOC,
-    ATTR_COLOR_NAME,
-} from './attrConfig.js'
+import { createProgramFromShaderSource } from '../shaderUtils.js';
 
 export default class Program {
     constructor(gl, vertexShaderSrc, fragShaderSrc) {
         this.gl = gl;
+        // Todo 应该把这些shaderUtils里面的方法拿到Program里
         this.program = createProgramFromShaderSource(gl, vertexShaderSrc, fragShaderSrc);
         gl.useProgram(this.program);
-        this.uniformLocation = {};
         this.uniformLoc = this.getStandardUniformLocations();
     }
 
     // 一个program是与特定的两个shader相关联的，而uniform变量名都是每个shader相关联的，故把getStandardUniformLocations放在这里
     // Todo: program应作为一个基类， 具体的业务program应继承于它，并且重写getStandardUniformLocations
     getStandardUniformLocations() {
-        return {
-            perspective:	this.gl.getUniformLocation(this.program,"uPMatrix"),
-            modalMatrix:	this.gl.getUniformLocation(this.program,"uModelMatrix"),
-            cameraMatrix:	this.gl.getUniformLocation(this.program,"uCameraMatrix"),
-            mainTexture:	this.gl.getUniformLocation(this.program,"uMainTex"),
-            mvpMatrix:      this.gl.getUniformLocation(this.program,"uMVPMatrix"),
-            vpMatrix:      this.gl.getUniformLocation(this.program,"uVPMatrix"),
-        };
+        return {};
     }
 
     activate() {
@@ -44,25 +31,22 @@ export default class Program {
         return this;
     }
 
+    // 这几个方法在派生类中被覆写
     setModalMatrix(mat) {
-        this.gl.uniformMatrix4fv(this.uniformLoc.modalMatrix, false, mat.raw);
         return this;
     }
 
     setVPMatrix(mat) {
-        this.gl.uniformMatrix4fv(this.uniformLoc.vpMatrix, false, mat.raw);
         return this;
     }
 
     setMvpMatrix(mat) {
-        this.gl.uniformMatrix4fv(this.uniformLoc.mvpMatrix, false, mat.raw);
         return this;
     }
 
     renderModal(modal) {
         modal.preRender();
-        const { mesh, transform, camera } = modal;
-        this.setVPMatrix(camera.getVpMat())
+        const { mesh, transform } = modal;
         this.setModalMatrix(transform.getTransMat());
         // TODO: set mvp
         this.gl.bindVertexArray(mesh.vao);

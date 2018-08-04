@@ -22,7 +22,7 @@ export default class Transform {
 
     reset() {
         this.position.set(0, 0, 0);
-        this.scale.set(0, 0, 0);
+        this.scale.set(1, 1, 1);
         this.rotation.set(0, 0, 0);
         this.transMat.reset();
     }

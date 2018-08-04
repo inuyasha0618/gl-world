@@ -11,11 +11,13 @@
         uniform mat4 uModelMatrix;
         uniform mat4 uVPMatrix;
         uniform mat4 uMVPMatrix;
+        uniform mat4 uPMatrix;
+        uniform mat4 uCameraMatrix;
         in vec3 a_position;
         in vec3 a_color;
         out vec3 vColor;
         void main() {
-            gl_Position = uVPMatrix * uModelMatrix * vec4(a_position, 1.0);
+            gl_Position = uPMatrix * uCameraMatrix * uModelMatrix * vec4(a_position, 1.0);
             vColor = a_color;
         }
     </script>
