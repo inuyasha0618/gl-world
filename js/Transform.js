@@ -18,6 +18,46 @@ export default class Transform {
 
     }
 
+    setPosition(x, y, z) {
+        this.position.set(x, y, z);
+    }
+
+    setScale(x, y, z) {
+        this.scale.set(x, y, z);
+        return this;
+    }
+    
+    setPosition(x, y, z) {
+        this.position.set(x, y, z);
+        return this;
+    }
+
+    setRotation(x, y, z) {
+        this.rotation.set(x, y, z);
+        return this;
+    }
+
+    addScale(dx, dy, dz) {
+        this.scale.x += dx;
+        this.scale.y += dy;
+        this.scale.z += dz;
+        return this;
+    }
+
+    addPosition(dx, dy, dz) {
+        this.position.x += dx;
+        this.position.y += dy;
+        this.position.z += dz;
+        return this;
+    }
+
+    addRotation(dx, dy, dz) {
+        this.rotation.x += dx;
+        this.rotation.y += dy;
+        this.rotation.z += dz;
+        return this;
+    }
+
     getTransMat() {return this.transMat;}
 
     reset() {

@@ -61,8 +61,9 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
         // 每次都向gpu更新camera的位姿就代价比较大了
 
         program.activate()
-        .setPerspectiveMat(camera.getPerspectiveMat())
-        .setCameraMat(camera.getCameraMat())
+        // .setPerspectiveMat(camera.getPerspectiveMat())
+        // .setCameraMat(camera.getCameraMat())
+        .setVPMatrix(camera.getVpMat())
         .renderModal(
             cubeModal	
             .setScale( scale, scale, scale)
