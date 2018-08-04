@@ -28,12 +28,12 @@ const gridMesh = new Mesh({
 })
 
 const camera = new FixedCamera({
-    eyeX: 0,
-    eyeY: 50,
-    eyeZ: -15,
+    eyeX: 8,
+    eyeY: 20,
+    eyeZ: 20.0,
     centerX: 0,
-    centerY: 0,
-    centerZ: -60,
+    centerY: 3,
+    centerZ: -10,
     upX: 0,
     upY: 1,
     upZ: 0,
@@ -43,7 +43,7 @@ const camera = new FixedCamera({
     far: 100.0,
 });
 const cubeModal = new Modal(cubeMesh)
-.setPosition(0.0, 15.0, -60.0)
+.setPosition(5.0, 12.0, -10.0)
 // .setRotation(30, 30, 30);
 
 const gridModal = new Modal(gridMesh);
@@ -65,9 +65,9 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
         .setCameraMat(camera.getCameraMat())
         .renderModal(
             cubeModal	
-            // .setScale( scale, scale, scale)
+            .setScale( scale, scale, scale)
                     // .setPosition( radius * Math.cos(angle), radius * Math.sin(angle), -1.5 )
-                    // .addRotation( 30 * dt, 60 * dt, 15 * dt )
+                    .addRotation( 30 * dt, 60 * dt, 15 * dt )
         )
         .renderModal(gridModal);
 
