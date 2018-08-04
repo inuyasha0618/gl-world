@@ -18,7 +18,7 @@ export default class Transform {
 
     }
 
-    getTransMat() {return this.transMat.raw;}
+    getTransMat() {return this.transMat;}
 
     reset() {
         this.position.set(0, 0, 0);

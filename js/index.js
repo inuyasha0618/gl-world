@@ -4,6 +4,7 @@ import RenderLoop from './RenderLoop.js';
 import Program from './Program.js';
 import Mesh from './Mesh.js';
 import Modal from './Modal.js';
+import FixedCamera from './FixedCamera.js';
 
 class CustomProgram extends Program {
     constructor(gl) {
@@ -63,8 +64,18 @@ let mesh = new Mesh({
     aryInd: indices,
     aryColor: colors,
 });
-
-let modal = new Modal(mesh).setPosition(0.5, 0.5, -0.5).setRotation(30, 30, 30);
+const camera = new FixedCamera({
+    eyeX: 0.5,
+    eyeY: 0.5,
+    eyeZ: 0,
+    far: 10.0,
+    centerX: 0.5,
+    centerY: 0.5,
+    centerZ: -0.5
+});
+let modal = new Modal(mesh, camera)
+.setPosition(0.5, 0.5, -0.5)
+.setRotation(30, 30, 30);
 
 const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt => {
     gl.clear();
@@ -87,9 +98,10 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
         // Camera放在这里在render期间保证只更新一次, 不然在每个modal里分别更新会导致camera不一致的情况
 
         program.activate().renderModal(
-            modal	.setScale( scale, scale, scale)
-                    .setPosition( radius * Math.cos(angle), radius * Math.sin(angle), 0 )
-                    .addRotation( 30 * dt, 60 * dt, 15 * dt )
+            modal	
+            // .setScale( scale, scale, scale)
+                    // .setPosition( radius * Math.cos(angle), radius * Math.sin(angle), -1.5 )
+                    // .addRotation( 30 * dt, 60 * dt, 15 * dt )
         );
 
     fps.innerHTML = RLoop.currentFps;

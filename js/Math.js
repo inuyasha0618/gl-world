@@ -62,6 +62,66 @@ class Matrix4{
 		return this;
 	}
 
+	setPerspective(fovy, aspect, near, far) {
+		Matrix4.perspective(this.raw, fovy, aspect, near, far);
+		return this;
+	}
+
+	setLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
+        let e, fx, fy, fz, rlf, sx, sy, sz, rls, ux, uy, uz;
+
+        fx = centerX - eyeX;
+        fy = centerY - eyeY;
+        fz = centerZ - eyeZ;
+
+        // Normalize f.
+        rlf = 1 / Math.sqrt(fx*fx + fy*fy + fz*fz);
+        fx *= rlf;
+        fy *= rlf;
+        fz *= rlf;
+
+        // Calculate cross product of f and up.
+        sx = fy * upZ - fz * upY;
+        sy = fz * upX - fx * upZ;
+        sz = fx * upY - fy * upX;
+
+        // Normalize s.
+        rls = 1 / Math.sqrt(sx*sx + sy*sy + sz*sz);
+        sx *= rls;
+        sy *= rls;
+        sz *= rls;
+
+        // Calculate cross product of s and f.
+        ux = sy * fz - sz * fy;
+        uy = sz * fx - sx * fz;
+        uz = sx * fy - sy * fx;
+
+        // Set to this.
+        e = this.raw;
+        e[0] = sx;
+        e[1] = ux;
+        e[2] = -fx;
+        e[3] = 0;
+
+        e[4] = sy;
+        e[5] = uy;
+        e[6] = -fy;
+        e[7] = 0;
+
+        e[8] = sz;
+        e[9] = uz;
+        e[10] = -fz;
+        e[11] = 0;
+
+        e[12] = 0;
+        e[13] = 0;
+        e[14] = 0;
+        e[15] = 1;
+
+        // Translate.
+        return this.translate(-eyeX, -eyeY, -eyeZ);
+    }
+
 	//....................................................................
 	//Static Data Methods
 	static identity(){
@@ -258,6 +318,13 @@ class Matrix4{
 	    out[14] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
 	    out[15] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
 	    return out;	
+	}
+
+	static multiply(outMat, ...mats) {
+		return mats.reduce((accu, current) => {
+			Matrix4.mult(accu.raw, accu.raw, current.raw)
+			return accu;
+		}, outMat);
 	}
 
 

@@ -8,12 +8,14 @@
     <script src="js/index.js" type="module"></script>
     <script id="vertex-shader" type="shader/vertex-shader">
         #version 300 es
-        uniform mat4 uMVMatrix;
+        uniform mat4 uModelMatrix;
+        uniform mat4 uVPMatrix;
+        uniform mat4 uMVPMatrix;
         in vec3 a_position;
         in vec3 a_color;
         out vec3 vColor;
         void main() {
-            gl_Position = uMVMatrix * vec4(a_position, 1.0);
+            gl_Position = uVPMatrix * uModelMatrix * vec4(a_position, 1.0);
             vColor = a_color;
         }
     </script>
