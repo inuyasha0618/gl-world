@@ -38,11 +38,11 @@ const quadMesh = createQuadMesh(gl);
 const freeCamera = new FreeCamera({
     posX: 3,
     posY: 10,
-    posZ: 50.0,
+    posZ: 100.0,
     fovy: 60,
     aspect: gl.canvas.width / gl.canvas.height,
     near: 1.0,
-    far: 100.0,
+    far: 1000.0,
     gl,
 })
 const cubeModal = new Modal(cubeMesh)

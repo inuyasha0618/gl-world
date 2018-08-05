@@ -24,9 +24,16 @@ export default class CircleProgram extends Program {
         out vec4 myColor;
         void main() {
             float a = 0.0;
-            if (uv.x < 0.1 || uv.y < 0.1 || uv.x > 0.9 || uv.y > 0.9) {
+            float x = uv.x - 0.5;
+            float y = uv.y - 0.5;
+            float r = sqrt(x * x + y * y);
+
+            if (r > 0.5) {
+                a = 0.0;
+            } else if (r > 0.4) {
                 a = 1.0;
             }
+
             myColor = vec4(1.0 - a, 1.0 - a, 1.0 - a, a);
         }`;
         super(gl, vShaderSrc, fShaderSrc);

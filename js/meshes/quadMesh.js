@@ -13,7 +13,7 @@ const uvs = [
 ];
 
 let p = 0;
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 30; i++) {
     let size = 1.0 + 4 * Math.random();
     let dx = 6 + Math.random() * 12;
     // let dx = 60;
