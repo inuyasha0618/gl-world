@@ -6,7 +6,8 @@ import {
 } from '../attrConfig.js'
 
 export default class Mesh {
-    constructor({gl, aryInd=[], aryVert=[], aryColor=[], aryNorm=[], aryUV=[], drawMode}) {
+    constructor({gl, aryInd=[], aryVert=[], aryColor=[], aryNorm=[], aryUV=[], drawMode, enableBlending=false}) {
+        this.enableBlending = enableBlending;
         this.drawMode = drawMode || gl.TRIANGLES;
         this.vao = gl.createVertexArray();
         gl.bindVertexArray(this.vao);

@@ -14,6 +14,7 @@ export default class CircleProgram extends Program {
         out vec2 uv;
         void main() {
             gl_Position = u_VP_mat * u_model_mat * vec4(a_position, 1.0);
+            uv = a_uv;
             vColor = a_color;
         }`;
         const fShaderSrc = `#version 300 es

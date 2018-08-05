@@ -2,6 +2,7 @@ export default function(canvasId) {
     let canvas = document.getElementById(canvasId);
     let gl = canvas.getContext('webgl2');
     gl.enable(gl.DEPTH_TEST);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);	//Setup default alpha blending
 
     if (!gl) {
         console.error('Webgl context is not available.');

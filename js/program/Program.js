@@ -48,6 +48,11 @@ export default class Program {
         modal.preRender();
         const { mesh, transform } = modal;
         this.setModalMatrix(transform.getTransMat());
+
+        if (mesh.enableBlending) {
+            this.gl.enable(this.gl.BLEND);
+        }
+
         // TODO: set mvp
         this.gl.bindVertexArray(mesh.vao);
         if (mesh.indexCount) {
@@ -56,6 +61,11 @@ export default class Program {
             this.gl.drawArrays(mesh.drawMode, 0, mesh.vertexCount);
         }
         this.gl.bindVertexArray(null);
+
+        if (mesh.enableBlending) {
+            this.gl.disable(this.gl.BLEND);
+        }
+
         return this;
     }
 }

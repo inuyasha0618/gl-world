@@ -8,11 +8,16 @@ const vertices = [   // Vertex coordinates
     0, 1, 2,   0, 2, 3,    // front
  ];
 
+ const uvs = [0.0, 0.0,  0.0, 1.0,  1.0, 1.0,  1.0, 0.0];
+
 
  const createQuadMesh = gl => new Mesh({
   gl,
   aryVert: vertices,
   aryInd: indices,
+  aryUV: uvs,
+  drawMode: gl.TRIANGLES,
+  enableBlending: true,
  });
 
  export default createQuadMesh;

@@ -9,7 +9,7 @@ import { createCubeMesh, createGridMesh, createQuadMesh } from './meshes/index.j
 const btn = document.getElementById('btn');
 const fps = document.getElementById('fps');
 
-const gl = getGlInstance('cvs-id').setSize(600, 600).clearColor(0.0, 0.0, 0.0, 1.0).clear();
+const gl = getGlInstance('cvs-id').setSize(600, 600).clearColor(1.0, 1.0, 1.0, 1.0).clear();
 const program = new CubeProgram(gl);
 const circleProgram = new CircleProgram(gl);
 
@@ -65,10 +65,6 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
 
         // Camera放在这里在render期间保证只更新一次, 不然在每个modal里分别更新会导致camera不一致的情况, 而且如果有多个modal的情况下
         // 每次都向gpu更新camera的位姿就代价比较大了
-        circleProgram.activate()
-        .setVPMatrix(freeCamera.getVpMat())
-        .renderModal(quadModal);
-
 
         program.activate()
         // .setPerspectiveMat(camera.getPerspectiveMat())
@@ -79,6 +75,10 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
             cubeModal.addRotation( 30 * dt, 60 * dt, 15 * dt )
         )
         .renderModal(gridModal);
+
+        circleProgram.activate()
+        .setVPMatrix(freeCamera.getVpMat())
+        .renderModal(quadModal);
 
     fps.innerHTML = RLoop.currentFps;
 })(90);
