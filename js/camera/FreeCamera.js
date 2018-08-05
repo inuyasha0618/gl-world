@@ -29,6 +29,7 @@ export default class FreeCamera {
         this.handleMousedown = this.handleMousedown.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.handleMouseWheel = this.handleMouseWheel.bind(this);
 
         this.registerMouseEvent();
     }
@@ -70,8 +71,15 @@ export default class FreeCamera {
         this.canvas.addEventListener('mousemove',  this.handleMouseMove);
         this.canvas.addEventListener('mouseup',  this.handleMouseUp);
     }
+    
+    handleMouseWheel(e) {
+        let delta = Math.max(-1, Math.min(1, e.wheelDelta || (-e.detail)));
+        this.pos.position.z += -delta;
+        console.log(`delta ${e.wheelData}`);
+    }
 
     registerMouseEvent() {
         this.canvas.addEventListener('mousedown',  this.handleMousedown);
+        this.canvas.addEventListener('mousewheel',  this.handleMouseWheel);
     }
 }

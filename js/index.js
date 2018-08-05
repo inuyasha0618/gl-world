@@ -45,7 +45,7 @@ const camera = new FixedCamera({
 });
 
 const freeCamera = new FreeCamera({
-    posX: 0,
+    posX: 3,
     posY: 10,
     posZ: 50.0,
     fovy: 60,
