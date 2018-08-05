@@ -9,7 +9,7 @@ import { createCubeMesh, createGridMesh, createQuadMesh } from './meshes/index.j
 const btn = document.getElementById('btn');
 const fps = document.getElementById('fps');
 
-const gl = getGlInstance('cvs-id').setSize(600, 600).clearColor(1.0, 1.0, 1.0, 1.0).clear();
+const gl = getGlInstance('cvs-id').fitScreen(0.95, 0.9).clearColor(1.0, 1.0, 1.0, 1.0).clear();
 const program = new CubeProgram(gl);
 const circleProgram = new CircleProgram(gl);
 
@@ -35,13 +35,12 @@ const quadMesh = createQuadMesh(gl);
 //     near: 1.0,
 //     far: 100.0,
 // });
-
 const freeCamera = new FreeCamera({
     posX: 3,
     posY: 10,
     posZ: 50.0,
     fovy: 60,
-    aspect: 1.0,
+    aspect: gl.canvas.width / gl.canvas.height,
     near: 1.0,
     far: 100.0,
     gl,

@@ -33,5 +33,11 @@ export default function(canvasId) {
         return this;
     }
 
+    gl.fitScreen = function(wp = 1, hp = 1) {
+        const w = window.innerWidth * wp;
+        const h = window.innerHeight * hp;
+        return this.setSize(w, h);
+    }
+
     return gl;
 }
