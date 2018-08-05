@@ -1,5 +1,5 @@
 import Program from './Program.js';
-export default class CustomProgram extends Program {
+export default class CircleProgram extends Program {
     constructor(gl) {
         const vShaderSrc = `#version 300 es
         uniform mat4 u_model_mat;
@@ -9,7 +9,9 @@ export default class CustomProgram extends Program {
         uniform mat4 u_camera_mat;
         in vec3 a_position;
         in vec3 a_color;
+        in vec2 a_uv;
         out vec3 vColor;
+        out vec2 uv;
         void main() {
             gl_Position = u_VP_mat * u_model_mat * vec4(a_position, 1.0);
             vColor = a_color;
@@ -17,9 +19,14 @@ export default class CustomProgram extends Program {
         const fShaderSrc = `#version 300 es
         precision highp float;
         in vec3 vColor;
+        in vec2 uv;
         out vec4 myColor;
         void main() {
-            myColor = vec4(vColor, 1.0);
+            float a = 0.0;
+            if (uv.x < 0.1 || uv.y < 0.1 || uv.x > 0.9 || uv.y > 0.9) {
+                a = 1.0;
+            }
+            myColor = vec4(1.0 - a, 1.0 - a, 1.0 - a, a);
         }`;
         super(gl, vShaderSrc, fShaderSrc);
         gl.useProgram(null);

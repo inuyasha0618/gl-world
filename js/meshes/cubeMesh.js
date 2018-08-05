@@ -1,3 +1,4 @@
+import Mesh from './Mesh.js';
 const vertices = [   // Vertex coordinates
     1.0, 1.0, 1.0,  -1.0, 1.0, 1.0,  -1.0,-1.0, 1.0,   1.0,-1.0, 1.0,  // v0-v1-v2-v3 front
     1.0, 1.0, 1.0,   1.0,-1.0, 1.0,   1.0,-1.0,-1.0,   1.0, 1.0,-1.0,  // v0-v3-v4-v5 right
@@ -25,4 +26,12 @@ const vertices = [   // Vertex coordinates
    20,21,22,  20,22,23     // back
  ];
 
- export { vertices, colors, indices };
+
+ const createCubeMesh = gl => new Mesh({
+  gl,
+  aryVert: vertices,
+  aryInd: indices,
+  aryColor: colors,
+ });
+
+ export default createCubeMesh;

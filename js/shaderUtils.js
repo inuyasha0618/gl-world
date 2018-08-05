@@ -45,6 +45,8 @@ const createProgram = (gl, vShader, fShader) => {
     gl.attachShader(program, fShader);
 
     // bindAttribLocation必须在link之前！！！
+    // Todo将bindAttribLocation放在具体的Program中，因为每个program由于shader code 不一样， 所以要绑定的名字和通道可能也不一样
+    // TOdo应将创建program的逻辑挪到Program基类中
     gl.bindAttribLocation(program, ATTR_POSITION_LOC,ATTR_POSITION_NAME);
     gl.bindAttribLocation(program, ATTR_NORMAL_LOC,ATTR_NORMAL_NAME);
     gl.bindAttribLocation(program, ATTR_UV_LOC,ATTR_UV_NAME);

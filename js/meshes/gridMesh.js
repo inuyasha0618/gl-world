@@ -1,3 +1,4 @@
+import Mesh from './Mesh.js';
 const vertices = [],
     colors = [],
     size = 100,			// W/H of the outer box of the grid, from origin we can only go 1 unit in each direction, so from left to right is 2 units max
@@ -65,4 +66,11 @@ vertices.push(half * 2);
 colors.push(0.0, 0.0, 1.0);
 
 
-export { vertices, colors };
+const createGridMesh = gl => new Mesh({
+    gl,
+    aryVert: vertices,
+    aryColor: colors,
+    drawMode: gl.LINES,
+   });
+  
+export default createGridMesh;

@@ -3,9 +3,7 @@ import {
     ATTR_NORMAL_LOC,
     ATTR_UV_LOC,
     ATTR_COLOR_LOC,
-} from './attrConfig.js'
-
-import { getStandardAttribLocations } from './shaderUtils.js';
+} from '../attrConfig.js'
 
 export default class Mesh {
     constructor({gl, aryInd=[], aryVert=[], aryColor=[], aryNorm=[], aryUV=[], drawMode}) {
