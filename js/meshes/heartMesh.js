@@ -32,7 +32,8 @@ for (let row = 0; row < layers - 1; row++) {
     for (let col = 0; col < ptsPerLayer; col++) {
         index.push(col + row * ptsPerLayer, col + ( row + 1 ) * ptsPerLayer);
         if (col === ptsPerLayer - 1) {
-            index.push(col + ( row + 1 ) * ptsPerLayer, ( row + 1 ) * ptsPerLayer);
+            // index.push(col + ( row + 1 ) * ptsPerLayer, ( row + 1 ) * ptsPerLayer);
+            index.push(row * ptsPerLayer, ( row + 1 ) * ptsPerLayer);
         }
     }
 }
