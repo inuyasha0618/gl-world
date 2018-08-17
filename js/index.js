@@ -5,7 +5,7 @@ import CircleProgram from './program/CircleProgram.js';
 import Modal from './Modal.js';
 import FixedCamera from './camera/FixedCamera.js';
 import FreeCamera from './camera/FreeCamera.js';
-import { createCubeMesh, createGridMesh, createQuadMesh } from './meshes/index.js'
+import { createCubeMesh, createGridMesh, createQuadMesh, createHeartMesh } from './meshes/index.js'
 const btn = document.getElementById('btn');
 const fps = document.getElementById('fps');
 
@@ -18,6 +18,8 @@ const cubeMesh = createCubeMesh(gl);
 const gridMesh = createGridMesh(gl);
 
 const quadMesh = createQuadMesh(gl);
+
+const heartMesh = createHeartMesh(gl);
 
 // 固定位置相机
 // const camera = new FixedCamera({
@@ -49,14 +51,21 @@ const cubeModal = new Modal(cubeMesh)
 .setPosition(5.0, 12.0, -10.0)
 // .setRotation(30, 30, 30);
 
+const heartModal= new Modal(heartMesh);
+
 const gridModal = new Modal(gridMesh);
 
 const quadModal = new Modal(quadMesh).setScale(3, 3, 3);
 
+const getHeartScale = (t => dt => {
+    t += dt
+    return 1 + 0.5 *  Math.sin(2*Math.PI * t / 2 );
+})(0)
+
 const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt => {
     gl.clear();
     // program.activate().renderModal(modal);
-
+    let heartScale = getHeartScale(dt);
     let p = cubeModal.transform.position,				//Just an pointer to transform position, make code smaller 
             angle = Math.atan2(p.y,p.x)  + (1*dt)		//Calc the current angle plus 1 degree per second rotation
             // radius = Math.sqrt(p.x * p.x + p.y * p.y),	//Calc the distance from origin.
@@ -73,11 +82,12 @@ const drawPoint = ((rotSpeed, shrinkSpeed = 10, pointSize=10.0, angle=0) => dt =
         .renderModal(
             cubeModal.addRotation( 30 * dt, 60 * dt, 15 * dt )
         )
-        .renderModal(gridModal);
+        .renderModal(gridModal)
+        .renderModal(heartModal.setScale(heartScale, heartScale, heartScale));
 
-        circleProgram.activate()
-        .setVPMatrix(freeCamera.getVpMat())
-        .renderModal(quadModal);
+        // circleProgram.activate()
+        // .setVPMatrix(freeCamera.getVpMat())
+        // .renderModal(quadModal);
 
     fps.innerHTML = RLoop.currentFps;
 })(90);

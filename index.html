@@ -35,6 +35,7 @@
         out vec3 vColor;
         void main() {
             gl_Position = uVPMatrix * uModelMatrix * vec4(a_position, 1.0);
+            gl_PointSize = 500.0;
             vColor = a_color;
         }
     </script>
